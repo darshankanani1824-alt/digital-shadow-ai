@@ -10,37 +10,43 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for modern Light Dashboard UI
+# Custom CSS for forcing pristine light SaaS card UI
 st.markdown("""
 <style>
-    /* Background */
+    /* Background styling */
     .stApp {
-        background: linear-gradient(180deg, #4b92db 0%, #68a7ec 120px, #f4f7fb 120px, #f4f7fb 100%);
+        background: linear-gradient(180deg, #4b92db 0%, #68a7ec 140px, #f4f7fb 140px, #f4f7fb 100%) !important;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    
+    /* Force main container padding */
+    .block-container {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
     }
     
     /* Header title */
     .main-title {
-        color: white;
+        color: #ffffff !important;
         text-align: center;
-        font-size: 2.2rem;
+        font-size: 2.3rem;
         font-weight: 700;
-        margin-top: -25px;
-        margin-bottom: 25px;
+        margin-top: -15px;
+        margin-bottom: 30px;
         letter-spacing: -0.5px;
     }
     
-    /* Card Container */
+    /* Dashboard Cards */
     .dashboard-card {
-        background: #ffffff;
-        border-radius: 16px;
-        padding: 22px 24px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-        border: 1px solid #edf2f7;
+        background: #ffffff !important;
+        border-radius: 18px !important;
+        padding: 22px 24px !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+        border: 1px solid #eef2f6 !important;
         margin-bottom: 20px;
     }
     
-    /* Card Header */
+    /* Card Headers */
     .card-header {
         display: flex;
         justify-content: space-between;
@@ -48,59 +54,74 @@ st.markdown("""
         margin-bottom: 16px;
     }
     .card-title {
-        font-size: 1.15rem;
-        font-weight: 700;
-        color: #1a202c;
+        font-size: 1.18rem !important;
+        font-weight: 700 !important;
+        color: #111827 !important;
         margin: 0;
     }
     .card-btn {
-        background: #111827;
-        color: white;
-        font-size: 0.78rem;
-        padding: 5px 12px;
+        background: #111827 !important;
+        color: #ffffff !important;
+        font-size: 0.8rem;
+        padding: 6px 14px;
         border-radius: 8px;
         font-weight: 600;
-        text-decoration: none;
     }
     .card-btn-light {
-        background: #f3f4f6;
-        color: #374151;
-        font-size: 0.78rem;
-        padding: 5px 12px;
+        background: #f3f4f6 !important;
+        color: #374151 !important;
+        font-size: 0.8rem;
+        padding: 6px 14px;
         border-radius: 8px;
         font-weight: 600;
         border: 1px solid #e5e7eb;
     }
     
-    /* List item row */
+    /* List Item Row */
     .list-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px 0;
-        border-bottom: 1px solid #f3f4f6;
-        font-size: 0.88rem;
+        padding: 11px 0;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 0.92rem;
     }
     .list-row:last-child {
         border-bottom: none;
     }
-    .badge-high {
-        color: #ef4444;
+    .item-name {
+        color: #1e293b !important;
         font-weight: 600;
-        font-size: 0.8rem;
     }
-    .badge-med {
-        color: #f59e0b;
-        font-weight: 600;
-        font-size: 0.8rem;
-    }
-    .badge-low {
-        color: #10b981;
-        font-weight: 600;
-        font-size: 0.8rem;
+    .item-time {
+        color: #64748b !important;
+        font-size: 0.86rem;
     }
     
-    /* Hide default elements */
+    /* Badges */
+    .badge-high {
+        color: #ef4444 !important;
+        font-weight: 700;
+        font-size: 0.84rem;
+    }
+    .badge-med {
+        color: #f59e0b !important;
+        font-weight: 700;
+        font-size: 0.84rem;
+    }
+    .badge-low {
+        color: #10b981 !important;
+        font-weight: 700;
+        font-size: 0.84rem;
+    }
+
+    /* Style the input inside card */
+    div[data-testid="stTextInput"] input {
+        border-radius: 10px !important;
+        border: 1px solid #e2e8f0 !important;
+        padding: 10px 14px !important;
+    }
+
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
@@ -117,32 +138,34 @@ with st.sidebar:
     if not api_key:
         api_key = st.text_input("Gemini API Key", type="password")
     else:
-        st.success("✅ Gemini Active")
+        st.success("✅ System API Key Active")
 
-# Main Page Title
+# Main Header
 st.markdown("<div class='main-title'>Digital Footprint Tracker</div>", unsafe_allow_html=True)
 
-# Top Section: Privacy Index & Privacy AI
+# Top Row
 col_top1, col_top2 = st.columns([1, 1.4])
 
 with col_top1:
     st.markdown("""
-    <div class='dashboard-card'>
-        <div style='color: #6b7280; font-size: 0.85rem; font-weight: 500;'>Privacy Index</div>
-        <div style='font-size: 1.8rem; font-weight: 800; color: #111827; margin: 4px 0 14px 0;'>Average</div>
+    <div class='dashboard-card' style='height: 125px;'>
+        <div style='color: #64748b; font-size: 0.85rem; font-weight: 600;'>Privacy Index</div>
+        <div style='font-size: 1.85rem; font-weight: 800; color: #0f172a; margin: 4px 0 12px 0;'>Average</div>
         <div style='display: flex; gap: 8px;'>
+            <div style='height: 6px; flex: 1; background: #2563eb; border-radius: 4px;'></div>
             <div style='height: 6px; flex: 1; background: #3b82f6; border-radius: 4px;'></div>
-            <div style='height: 6px; flex: 1; background: #60a5fa; border-radius: 4px;'></div>
             <div style='height: 6px; flex: 1; background: #93c5fd; border-radius: 4px;'></div>
-            <div style='height: 6px; flex: 1; background: #e5e7eb; border-radius: 4px;'></div>
+            <div style='height: 6px; flex: 1; background: #e2e8f0; border-radius: 4px;'></div>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
 with col_top2:
-    st.markdown("<div class='dashboard-card' style='padding-bottom: 12px;'>", unsafe_allow_html=True)
-    st.markdown("<div style='color: #111827; font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;'>Get personalized insights with Privacy AI</div>", unsafe_allow_html=True)
-    ai_col1, ai_col2 = st.columns([4, 1])
+    st.markdown("""
+    <div class='dashboard-card' style='height: 125px;'>
+        <div style='color: #0f172a; font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;'>Get personalized insights with Privacy AI</div>
+    """, unsafe_allow_html=True)
+    ai_col1, ai_col2 = st.columns([4, 1.2])
     with ai_col1:
         query = st.text_input("Ask anything to Privacy AI", placeholder="Ask anything to Privacy AI...", label_visibility="collapsed")
     with ai_col2:
@@ -155,14 +178,14 @@ if ask_clicked and query:
             genai.configure(api_key=api_key)
             model = genai.GenerativeModel("gemini-3.8-flash")
             with st.spinner("AI analyzing threat footprint..."):
-                resp = model.generate_content(f"Analyze this privacy issue and suggest immediate fix: {query}")
+                resp = model.generate_content(f"Analyze this privacy issue concisely: {query}")
                 st.info(f"🤖 **Privacy AI:** {resp.text}")
         except Exception as e:
             st.error(f"Error: {str(e)}")
     else:
         st.warning("Please configure your Gemini API Key in Streamlit Secrets.")
 
-# Middle Section: Data Breaches & Permission Risks
+# Middle Row: Data Breaches & Permission Risks
 m_col1, m_col2 = st.columns(2)
 
 with m_col1:
@@ -173,28 +196,28 @@ with m_col1:
             <span class='card-btn'>Resolve all</span>
         </div>
         <div class='list-row'>
-            <span><b>Google</b></span>
-            <span style='color: #6b7280;'>2 days ago</span>
+            <span class='item-name'>Google</span>
+            <span class='item-time'>2 days ago</span>
             <span class='badge-high'>• High</span>
         </div>
         <div class='list-row'>
-            <span><b>United Healthcare</b></span>
-            <span style='color: #6b7280;'>2 days ago</span>
+            <span class='item-name'>United Healthcare</span>
+            <span class='item-time'>2 days ago</span>
             <span class='badge-high'>• High</span>
         </div>
         <div class='list-row'>
-            <span><b>Meta</b></span>
-            <span style='color: #6b7280;'>7 days ago</span>
+            <span class='item-name'>Meta</span>
+            <span class='item-time'>7 days ago</span>
             <span class='badge-med'>• Medium</span>
         </div>
         <div class='list-row'>
-            <span><b>AT&T</b></span>
-            <span style='color: #6b7280;'>10 days ago</span>
+            <span class='item-name'>AT&T</span>
+            <span class='item-time'>10 days ago</span>
             <span class='badge-low'>• Low</span>
         </div>
         <div class='list-row'>
-            <span><b>Ticketmaster</b></span>
-            <span style='color: #6b7280;'>10 days ago</span>
+            <span class='item-name'>Ticketmaster</span>
+            <span class='item-time'>10 days ago</span>
             <span class='badge-low'>• Low</span>
         </div>
     </div>
@@ -208,34 +231,34 @@ with m_col2:
             <span class='card-btn-light'>Review all</span>
         </div>
         <div class='list-row'>
-            <span>📁 Google Drive</span>
-            <span style='color: #6b7280;'>Files</span>
+            <span class='item-name'>📁 Google Drive</span>
+            <span class='item-time'>Files</span>
             <span class='badge-high'>• High</span>
         </div>
         <div class='list-row'>
-            <span>💳 Amazon</span>
-            <span style='color: #6b7280;'>Payment</span>
+            <span class='item-name'>💳 Amazon</span>
+            <span class='item-time'>Payment</span>
             <span class='badge-high'>• High</span>
         </div>
         <div class='list-row'>
-            <span>📍 Google Chrome</span>
-            <span style='color: #6b7280;'>Location</span>
+            <span class='item-name'>📍 Google Chrome</span>
+            <span class='item-time'>Location</span>
             <span class='badge-high'>• High</span>
         </div>
         <div class='list-row'>
-            <span>👥 Spotify</span>
-            <span style='color: #6b7280;'>Contacts</span>
+            <span class='item-name'>👥 Spotify</span>
+            <span class='item-time'>Contacts</span>
             <span class='badge-med'>• Medium</span>
         </div>
         <div class='list-row'>
-            <span>🎙️ LinkedIn</span>
-            <span style='color: #6b7280;'>Microphone</span>
+            <span class='item-name'>🎙️ LinkedIn</span>
+            <span class='item-time'>Microphone</span>
             <span class='badge-med'>• Medium</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-# Bottom Section: Graphs (Suspicious Logins & Accounts Breakdown)
+# Bottom Row: Graphs
 b_col1, b_col2 = st.columns(2)
 
 with b_col1:
@@ -247,7 +270,6 @@ with b_col1:
         </div>
     """, unsafe_allow_html=True)
     
-    # Bar Chart with Plotly
     days = ['Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue']
     counts = [2, 5, 8, 2, 2, 3, 4]
     
@@ -255,7 +277,7 @@ with b_col1:
         go.Bar(
             x=days, 
             y=counts, 
-            marker_color='#6b8afd',
+            marker_color='#60a5fa',
             marker_line_width=0,
             text=counts,
             textposition='auto',
@@ -266,8 +288,8 @@ with b_col1:
         height=190,
         plot_bgcolor='white',
         paper_bgcolor='white',
-        xaxis=dict(showgrid=False, showline=False),
-        yaxis=dict(showgrid=True, gridcolor='#f3f4f6', zeroline=False),
+        xaxis=dict(showgrid=False, showline=False, tickfont=dict(color='#64748b')),
+        yaxis=dict(showgrid=True, gridcolor='#f1f5f9', zeroline=False, tickfont=dict(color='#64748b')),
     )
     st.plotly_chart(fig_bar, use_container_width=True, config={'displayModeBar': False})
     st.markdown("</div>", unsafe_allow_html=True)
@@ -281,7 +303,6 @@ with b_col2:
         </div>
     """, unsafe_allow_html=True)
     
-    # Donut Chart with Plotly
     labels = ['Social media', 'Finance', 'E-commerce', 'Work & productivity', 'Personal', 'Other']
     values = [280, 190, 130, 90, 60, 46]
     colors = ['#f87171', '#fbbf24', '#34d399', '#60a5fa', '#a78bfa', '#38bdf8']
@@ -289,14 +310,14 @@ with b_col2:
     fig_donut = go.Figure(data=[go.Pie(
         labels=labels,
         values=values,
-        hole=.6,
+        hole=.62,
         marker=dict(colors=colors),
         textinfo='none'
     )])
     fig_donut.update_layout(
         margin=dict(l=0, r=0, t=10, b=0),
         height=190,
-        legend=dict(orientation="v", x=1.05, y=0.5, font=dict(size=10)),
+        legend=dict(orientation="v", x=1.05, y=0.5, font=dict(size=11, color='#334155')),
         paper_bgcolor='white'
     )
     st.plotly_chart(fig_donut, use_container_width=True, config={'displayModeBar': False})
